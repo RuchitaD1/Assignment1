@@ -1,0 +1,117 @@
+Part 1:
+
+Program description:
+ The program asks for the path to the folder and reads all files in the folder line by line.
+The tags are removed from each line using regular expressions.
+Hyphens and commas have been replaced with spaces
+All other punctuations are deleted.
+All alphanumerics and numbers are removed
+All words are converted to lower case
+\n is removed using strip()
+Acronymns are converted to lowercase and periods are removed(e.g.: U.S.A becomes usa)
+Since punctuations have been removed, possessives have been changed to one word (e.g sheriff's will be converted to sheriffs)
+
+Data Structures:
+The data structures used here are lists and dictionaries in python.
+Important lists in the program:
+Lists are the basic data structures used to store tokens in the program
+1. tot: Contains all the tokens
+2. a: Contains unique tokens
+3. unique: contains tokens occurring only once
+Dictionaries:
+Dictionaries are used to store key value pairs of words and their corresponding frequency of occurrence.
+1. freq: stores words and occurrence frequency for words occurring more than once
+2. freq30: stores 30 most frequently occurring words
+
+Algorithm:
+1. Read each file line by line in the given folder
+2. Remove tags using regular expressions
+3. Replace hyphens, commas with space
+4. Remove all other punctuations,  alphanumerics and numbers 
+5. Strip “/n”
+6. For each line in file:
+a. For each word in line
+i. Convert to lowercase
+ii. Add word to List tot
+iii. If word is not in List a
+1. Add word to a
+iv. Else
+1. If word is not in dictionary freq
+a. Add (word,2)  to freq
+2. Else 
+a. Increment value of word in dictionary freq
+7. If word is in List a and word is not in Dictionary freq:
+i. Add word to List unique
+8. Sort freq according to value
+9. Get 30 most highest valued terms from sorted dictionary
+10. Calculate average tokens as length of list divided by total number of files(that is 1400)
+
+
+Output:
+Tokens:
+Total No of tokens:
+230772
+No of unique tokens:
+8903
+Most frequent 30 tokens and their frequency:
+[('shock', 712), ('theory', 788), ('mach', 823), ('it', 856), ('results', 885), ('number', 973), ('which', 975), ('layer', 1002), ('this', 1081), ('as', 1114), ('from', 1116), ('boundary', 1156), ('pressure', 1207), ('be', 1272), ('an', 1388), ('that', 1570), ('by', 1756), ('at', 1834), ('flow', 1848), ('on', 1944), ('with', 2263), ('are', 2429), ('for', 3492), ('is', 4113), ('to', 4560), ('in', 4650), ('a', 5993), ('and', 6672), ('of', 12714), ('the', 19449)]
+average tokens per doc:
+164.837142857
+average unique tokens per doc:
+6.35928571429
+no of tokens that occur only once:
+3395
+To acquire all the tokens from the collection, along with the unique, frequent and only once occurring tokens, the program takes about 6.09 seconds
+
+Part 2:
+
+Program description:
+ This part is implemented in the same file
+The tokens are taken from list ‘tot’ and given to Porter Stemmer
+The Porter Stemmer implementation used is taken from nltk library
+
+
+Data Structures:
+The data structures used here are lists and dictionaries in python.
+Important lists in the program:
+Lists are the basic data structures used to store stems in the program
+4. stemm: Contains all the stems
+5. stemOnce: Contains unique stems
+6. stemNew: contains stems occurring only once
+Dictionaries:
+Dictionaries are used to store key value pairs of stems and their corresponding frequency of occurrence.
+3. fstems: stores words and occurrence frequency for stems occurring more than once
+4. freqStems30: stores 30 most frequently occurring stems
+
+Algorithm:
+1. Create object of PorterStemmer() from nltk
+2. Get tokens from List
+3. For each token in list:
+a. Get stem using PorterStemmer()
+b. Add to List ‘stemm’
+c. If stem not in List stemOnce:
+i. Add stem to stemOnce
+d. Else:
+i. If stem is not in fstems:
+1. Add (stem,2) to fstems
+ii. Else:
+1. Get value of stem and increment it in fstems
+4. if stem is in stemOnce and not in fstems:
+a. Add stem to stemNew
+5. Sort fstems according to value and get the 30 most high valued stems in freqStems30
+6. Get average no. of stems per document by dividing length of list stems by no. of documents
+7. Get average number of stems per document by diving length of stemOnce by no. of documents
+
+Output:
+Total no. of stems:
+Same as total number of tokens
+no of distinct stems
+6117
+Number of stems that occur only once
+2287
+Most frequent 30 stems
+[('theori', 881), ('method', 886), ('which', 975), ('effect', 996), ('it', 1043), ('thi', 1081), ('result', 1087), ('as', 1114), ('from', 1116), ('layer', 1134), ('boundari', 1185), ('number', 1347), ('be', 1369), ('pressur', 1382), ('an', 1388), ('that', 1570), ('by', 1756), ('at', 1834), ('on', 1944), ('flow', 2079), ('with', 2263), ('are', 2429), ('for', 3492), ('is', 4113), ('to', 4560), ('in', 4650), ('a', 5993), ('and', 6672), ('of', 12714), ('the', 19449)]
+Average Number of unique stems per document
+4.36928571429
+Average Number of stems per document
+164.837142857
